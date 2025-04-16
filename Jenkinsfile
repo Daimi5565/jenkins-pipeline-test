@@ -1,16 +1,10 @@
 pipeline {
     agent any
 
-    environment {
-        // You can define environment variables here if needed
-        NODE_ENV = 'development'
-    }
-
     stages {
         stage('Clone repository') {
             steps {
-                // Use SSH credentials with ID 'github-ssh-key'
-                git credentialsId: 'github-ssh-key', url: 'git@github.com:Daimi5565/jenkins-pipeline-test.git'
+                git branch: 'main', credentialsId: 'github-ssh-key', url: 'git@github.com:Daimi5565/jenkins-pipeline-test.git'
             }
         }
 
@@ -23,7 +17,7 @@ pipeline {
         stage('Run the application') {
             steps {
                 sh 'nohup npm start > app.log 2>&1 &'
-                echo '✅ Application is running in the background on port 3000'
+                echo '✅ Application is running on port 3000'
             }
         }
     }
